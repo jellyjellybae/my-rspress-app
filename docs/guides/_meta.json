@@ -1,0 +1,20 @@
+[
+  {
+    "type": "dir",
+    "name": "basic",
+    "label": "基本小工具🔧",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "file",
+    "name": "introduction",
+    "label": "Introduction"
+  },
+  {
+    "type": "file",
+    "name": "install",
+    "label": "Install"
+  }
+
+]
