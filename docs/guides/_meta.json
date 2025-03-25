@@ -8,6 +8,11 @@
   },
   {
     "type": "file",
+    "name": "install",
+    "label": "Install"
+  },
+  {
+    "type": "file",
     "name": "introduction",
     "label": "Introduction"
   },
