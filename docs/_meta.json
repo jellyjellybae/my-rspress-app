@@ -2,7 +2,7 @@
 [
     {
         "text": "Guide",
-        "link": "/guides/introduction",
+        "link": "/guides/basic",
         "activeMatch": "^/guides/"
     }
 ]
