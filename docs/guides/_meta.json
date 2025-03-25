@@ -13,8 +13,8 @@
   },
   {
     "type": "file",
-    "name": "install",
-    "label": "Install"
+    "name": "ShortCuts",
+    "label": "快捷键"
   }
 
 ]
