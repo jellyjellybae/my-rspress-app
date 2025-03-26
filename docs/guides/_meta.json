@@ -18,6 +18,11 @@
   },
   {
     "type": "file",
+    "name": "tricks",
+    "label": "Tricks"
+  },
+  {
+    "type": "file",
     "name": "ShortCuts",
     "label": "快捷键"
   }
