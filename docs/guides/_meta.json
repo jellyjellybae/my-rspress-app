@@ -7,14 +7,16 @@
     "collapsed": false
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "install",
     "label": "Install"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "introduction",
-    "label": "Introduction"
+    "label": "Introduction",
+    "collapsible": true,
+    "collapsed": false
   },
   {
     "type": "file",
@@ -22,7 +24,7 @@
     "label": "Tricks"
   },
   {
-    "type": "file",
+    "type": "dir",
     "name": "ShortCuts",
     "label": "快捷键"
   }
