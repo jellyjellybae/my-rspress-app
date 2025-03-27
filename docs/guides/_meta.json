@@ -13,6 +13,13 @@
   },
   {
     "type": "dir",
+    "name": "interview",
+    "label": "Interview",
+    "collapsible": true,
+    "collapsed": false
+  },
+  {
+    "type": "dir",
     "name": "introduction",
     "label": "Introduction",
     "collapsible": true,

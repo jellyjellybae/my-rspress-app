@@ -1,0 +1,110 @@
+# 一些常见的面试题
+:::note
+这是一个 `note` 类型的 `block`
+:::
+## 防抖截流
+### 防抖
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #inputField {
+            padding: 8px;
+            font-size: 16px;
+            width: 300px;
+        }
+        #output {
+            margin-top: 10px;
+            color: #333;
+        }
+        </style>
+</head>
+<body>
+    <h2>输入事件模拟（带防抖）</h2>
+    <input type="text" id="inputField" placeholder="请输入内容...">
+    <div id="output">结果将显示在这里</div>
+    <script src="./debounce.js"></script>
+</body>
+</html>
+```
+```js
+// 防抖函数用于限制函数的执行频率，常用于处理高频触发的事件（如窗口调整、输入框输入等），确保在事件停止触发一段时间后才执行一次。
+function debounce(fn, delay) {
+    let timer = null
+    return function (...args) {
+        if (timer) {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+            fn(...args)
+            timer = null
+        }, delay)
+    }
+}
+// 获取 DOM 元素
+const inputField = document.getElementById('inputField');
+const output = document.getElementById('output');
+// 示例1: 模拟输入事件
+const logInput = debounce((value) => {
+    output.textContent = `处理后的输入: ${value || '无内容'}`;
+    console.log(`输入值: ${value}`);
+}, 500);
+
+ 
+// 监听输入事件
+inputField.addEventListener('input', (event) => {
+    const value = event.target.value;
+    logInput(value);
+});
+// // 示例2: 窗口调整事件
+const handleResize = debounce(() => {
+    console.log("窗口大小调整完成");
+}, 300);
+
+window.addEventListener("resize", handleResize); // 调整窗口时，只在停止调整 300ms 后执行
+```
+### 截流
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <input type="text" id="input">
+    <div id="content">content:</div>
+</body>
+<script type="text/javascript">
+    // 更清晰的实现（修正解构赋值问题）
+function handler() {
+    const inputElement = document.getElementById("input");
+    document.getElementById("content").innerHTML = `内容: ${inputElement.value}`;
+}
+
+// 标准节流函数实现（保留上下文绑定能力）
+const throttle = (fn, wait) => {
+    let timer;
+    return function (...args) {
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(this, args); // 绑定正确的 this 上下文
+                timer = null;
+            }, wait);
+        }
+    };
+};
+document.addEventListener('input',throttle(handler,300))
+</script>
+</html>
+```
