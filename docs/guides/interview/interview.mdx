@@ -1,4 +1,4 @@
-import Title from '../../components/';
+import Title from '@/components/index';
 
 
 <Title text="一些常见的面试题"/>
@@ -113,7 +113,7 @@ document.addEventListener('input',throttle(handler,300))
 ```
 ### 区别
 
-| 维度         | 防抖（Debounce）       | 节流（Throttle）           |
+| 维度         | 防抖(Debounce)       | 节流(Throttle)           |
 | ------------ | ---------------------- | -------------------------- |
 | 核心目标     | 确保最终状态稳定后执行 | 确保固定间隔内最多执行一次 |
 | 高频触发结果 | 只执行最后一次         | 按固定节奏执行             |
