@@ -21,7 +21,11 @@
       "@/*": [
         "docs/*"
       ]
-    }
+    },
+    "types": [
+      "react",
+      "react-dom"
+    ]
   },
   "include": [
     "docs",
@@ -30,5 +34,5 @@
   ],
   "mdx": {
     "checkMdx": true
-  }
+  },
 }
