@@ -1,9 +1,17 @@
-
 [
     {
+         "text": "Home",
+         "link": "/",
+         "position": "left" 
+       },
+     {
         "text": "Guide",
         "link": "/guides/basic",
         "activeMatch": "^/guides/"
+    },
+    {
+        "text": "源码学习",
+        "link": "/article/article",
+        "activeMatch": "^/article/"
     }
-    
 ]

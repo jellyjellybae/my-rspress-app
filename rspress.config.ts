@@ -5,8 +5,14 @@ export default defineConfig({
   root: 'docs',
   base: '/my-rspress-app/', // 根据仓库名填写
   themeConfig: {
-    // 添加布局配置
-    
+    outlineTitle: '目录',
+    socialLinks: [
+      {
+        icon: 'github',
+        mode: 'link',
+        content: 'https://github.com/jellyjellybae',
+      },
+    ],
   },
   globalUIComponents: [path.join(__dirname, 'docs/components/MyComponent.tsx')],
 });

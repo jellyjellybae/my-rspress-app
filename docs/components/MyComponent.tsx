@@ -1,14 +1,25 @@
 import { useState, useEffect } from 'react';
-
+import { usePageData } from 'rspress/runtime';
 // 进度组件（单独提取）
 const ReadingProgress = () => {
+  const { page } = usePageData();
   const [progress, setProgress] = useState(0);
+
+  // 如果页面标记了隐藏进度条
+  if (page?.frontmatter?.hideProgress) {
+    return null;
+  }
 
   useEffect(() => {
     const updateProgress = () => {
       const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = window.scrollY;
+      const scrolled = Math.max(0, window.scrollY);
       const progressValue = Math.min((scrolled / windowHeight) * 100, 100);
+      // 修复2：处理不可滚动的情况
+      if (windowHeight <= 0) {
+        setProgress(0);
+        return;
+      }
       setProgress(progressValue);
     };
 

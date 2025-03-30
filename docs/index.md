@@ -1,5 +1,6 @@
 ---
 pageType: home
+hideProgress: true
 
 hero:
   name: Rspress
