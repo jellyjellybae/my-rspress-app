@@ -1,21 +1,31 @@
 import { useState, useEffect } from 'react';
 import { usePageData } from 'rspress/runtime';
-// 进度组件（单独提取）
+
 const ReadingProgress = () => {
+  // --------------------------------------------------------------------------
+  // 关键点：所有 Hooks 必须放在条件判断之前，且顺序固定！
+  // --------------------------------------------------------------------------
   const { page } = usePageData();
   const [progress, setProgress] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // 如果页面标记了隐藏进度条
-  if (page?.frontmatter?.hideProgress) {
-    return null;
-  }
-
+  // 初始化挂载状态
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // 滚动监听逻辑（必须放在条件判断之前）
+  useEffect(() => {
+    // 如果条件满足，提前返回不执行逻辑
+    if (page?.frontmatter?.hideProgress || !isMounted) {
+      return;
+    }
+
     const updateProgress = () => {
       const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrolled = Math.max(0, window.scrollY);
       const progressValue = Math.min((scrolled / windowHeight) * 100, 100);
-      // 修复2：处理不可滚动的情况
+
       if (windowHeight <= 0) {
         setProgress(0);
         return;
@@ -25,13 +35,21 @@ const ReadingProgress = () => {
 
     window.addEventListener('scroll', updateProgress);
     return () => window.removeEventListener('scroll', updateProgress);
-  }, []);
+  }, [page?.frontmatter?.hideProgress, isMounted]); // 添加依赖项
 
+  // --------------------------------------------------------------------------
+  // 条件判断必须放在所有 Hooks 之后！
+  // --------------------------------------------------------------------------
+  if (page?.frontmatter?.hideProgress || !isMounted) {
+    return null;
+  }
+
+  // 渲染逻辑保持不变
   return (
     <>
       {/* 进度条 */}
-      <div style={{ 
-        position: 'fixed', 
+      <div style={{
+        position: 'fixed',
         top: 0,
         left: 0,
         width: '100%',
@@ -39,7 +57,7 @@ const ReadingProgress = () => {
         backgroundColor: '#f0f0f0',
         zIndex: 9999
       }}>
-        <div style={{ 
+        <div style={{
           width: `${progress}%`,
           height: '100%',
           backgroundColor: '#2563eb',
