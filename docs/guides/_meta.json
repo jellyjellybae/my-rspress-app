@@ -19,13 +19,6 @@
     "collapsed": false
   },
   {
-    "type": "dir",
-    "name": "introduction",
-    "label": "Introduction",
-    "collapsible": true,
-    "collapsed": false
-  },
-  {
     "type": "file",
     "name": "tricks",
     "label": "Tricks"

@@ -26,10 +26,112 @@ xs :->del
 - 删掉除空格以外的这一行////dd
 - u: vim 中的 ctrl z
 - ctrl + r：重做 ctrl shift z
+`vim-indent-object`
+`operator ai` :操作于`}`之前
+
+操作`{}`内的，可以衍生操作一个函数。
+
+```
+function foo(){
+return null
+}
+```
 
 ### visual mode
 v模式 
 `V`:选中这一行
 `o`:移动光标移动很方便
-选中再操
-hihi
+选中再操作
+### 搜索
+no fucking way
+
+
+- oneline
+`f or F`:vfw
+
+
+`t or T`:d t w 
+- 全局搜索
+
+> `/ or ?`
+```js filename="index.js"{1}
+console.log(1)
+```
+### . %
+```
+function hdfsjhdfjsghjf(params) {
+  let a = 113
+  let b=343
+  return a+b3
+  
+}
+```
+
+
+数字点 批量重复操作
+
+选择批量替换 配合/
+
+- gh hover
+- gciw
+
+
+## vscode
+
+- C - w v
+- C - w s
+
+- C - w w changewindow
+- C - w c close window
+- Cmd W
+- C - w o close other windows
+- % { } () []
+- indent Object  基于缩进
+- cmd shift j mulit 多范围选择cmd up down切换
+
+- cmd p ->>>
+  - >[cmd shift p]extensions 
+  - @[cmd t]
+  - #[cmd shift o]工作区 :排序
+- cmd t
+- cmd shift enter
+- cmd enter
+- option + delete：删除光标前的单词（一个文本块为一个单词，如 vimUser 这里为一个单词）
+- option + control + delete：删除光标前的单词（以驼峰为单词的区分，如 vimUser 这里为两个单词）
+- f8
+- cmd k   r[reveal in finder]
+- cmd k   p[copy path] 
+
+
+## Mac
+### basic
+` command + ,`：打开设置页，绝大部分软件通用
+
+
+
+` command + q`：退出软件
+
+` command + ctrl + q`：锁屏
+
+` command + tap / command + shift + tap`：触发一次则快速切换到上一个使用的软件窗口，多次触发则会显示当前打开了的软件列表并向右切换，而 command + shift + tap 则是向左切换
+
+` command + h`：隐藏软件窗，隐藏后可以通过 `command + tap` 切换到该软件而让它显示出来；
+
+` command + m`：隐藏软件窗到底部 Dock 栏，隐藏后无法通过 `command + tap` 切换到该软件而让它显示出来；可以通过 `command + tap` 切换到该软件，松开 tab 但不松开 `command`，然后按下 option 键，即可让改软件重新从 Dock 调出来；
+
+command +`：切换同一个软件中的多个窗口，如 VScode 打开多个工作区窗口时即可用它切换；
+
+
+`control + [左 / 右方向键]`：切换桌面；
+### finder
+- ↓↑←→：选择文件
+- command + ↓ / command + o：进入文件夹或打开文件；
+- command + ↑：返回上一层；
+- command + [：后退；
+- command + ]：前进；
+- command + d：复制选中的文件；
+- command + i：显示选中的文件简介；
+- shift + command + n：新建文件夹；
+- command + delete：删除文件；
+- command + n：新建 Finder 窗口；
+  按住 option 同时移动文件到另一文件夹会拷贝该文件夹；
