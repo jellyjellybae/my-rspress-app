@@ -8,8 +8,10 @@
 		"rspress": "^1.43.9"
 	},
 	"dependencies": {
+		"@mdx-js/react": "^3.1.0",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
+		"mermaid": "^11.6.0",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0"
 	}
