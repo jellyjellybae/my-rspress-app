@@ -1,5 +1,5 @@
 import { defineConfig } from 'rspress/config';
-
+import mermaid from 'rspress-plugin-mermaid';
 import path from 'path';
 export default defineConfig({
 
@@ -17,4 +17,5 @@ export default defineConfig({
     ],
   },
   globalUIComponents: [path.join(__dirname, 'docs/components/MyComponent.tsx')],
+  plugins: [mermaid()],
 });

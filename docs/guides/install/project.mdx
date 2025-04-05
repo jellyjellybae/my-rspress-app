@@ -1,4 +1,4 @@
-// import Mermaid from '@/components/Mermaid.js';
+{/* // import Mermaid from '@/components/Mermaid.js'; */}
 
 
 # flutter 
@@ -71,10 +71,18 @@ runApp(
 ```
 ## scaffold 
 ```mermaid
-sequenceDiagram
-    Alice->>John: 你好 John!
-    John-->>Alice: 你好 Alice!
+flowchart TB
+    subgraph flexibleSpace [flexibleSpace]
+        subgraph topGroup [ ]
+            direction TB
+            leading[leading]
+            title[title]
+            actions[actions]
+        end
+        bottom[bottom]
+    end
 ```
+
 ```dart
 void main() {
   //变量在这里
@@ -136,6 +144,67 @@ void main() {
              GestureDetector小部件没有视觉表示，而是检测用户进行的手势。
             当用户点击child时，GestureDetector调用其回调函数
 ## build 
+### build 可以嵌套
+```dart
+import 'package:flutter/material.dart';
+
+main(){
+  //runApp把home参数里面的Widget画到屏幕上
+    runApp(MaterialApp(home: Widget1()));
+}
+class Widget1 extends StatelessWidget {
+  const Widget1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text("000"),
+        Text("111"),
+        Widget2(),
+      ],
+    );
+
+  }
+}
+class Widget2 extends StatelessWidget {
+  const Widget2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    //这里Widget2对象把build里面返回的Widget作为Widget使用,
+    // 返回给上一层,所以上一层的row,就变成了 111 spacer 222
+    return Column(
+      children: [
+        Text("222"),
+        Widget3()
+      ],
+    );
+  }
+}
+class Widget3 extends StatefulWidget {
+  const Widget3({super.key});
+  @override
+  State<Widget3> createState() => _Widget3State();
+}
+//build可以嵌套,把return的Widget一层层,向上返回
+class _Widget3State extends State<Widget3> {
+  int i = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[Text("333"),ElevatedButton(onPressed: (){
+      print("${++i}");
+      setState(() {
+      });
+      }, child: Text("$i")//此处的i只能在 _Widget3State 里找
+      )
+      ]
+    );
+  }
+}
+```
 更改界面 **StatefulWidget**中的**build**
 - stful cmd + i
 - stf 快速生成StatefulWidget
@@ -257,6 +326,7 @@ class Widget1 extends StatelessWidget{
 }
 ```
 
+
 **快捷键**
 - 调出 Refactor 菜单。在 VS Code 中，您可以通过以下两种方式之一执行此操作：
 
@@ -267,3 +337,74 @@ class Widget1 extends StatelessWidget{
 - 在 Refactor 菜单中，选择 Extract Widget。指定一个名称，例如 BigCard，然后点击 Enter 键。
 
 这会在当前文件的末尾自动创建一个新的 BigCard 类。
+### state生命周期
+stateless widget 没有生命周期
+```dart
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //必须调用
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Text('abc');
+  }
+```
+
+响应小部件生命周期事件
+在 StatefulWidget 上调用 createState() 后，框架会将新的状态对象插入到树中，然后调用状态对象的 initState()。
+State 的子类可以重写 initState()，以执行只需要在初始化时发生的工作。
+例如，可以重写 initState() 来配置动画或订阅平台服务。实现 initState() 的必须以调用 super.initState 开头。
+当不再需要状态对象时，框架会调用状态对象的 dispose()。重写 dispose() 函数以执行清理工作。
+例如，可以重写 dispose() 来取消定时器或取消订阅平台服务。dispose() 的实现通常以调用 super.dispose 结束。 
+## 布局
+- Container
+```dart
+    return Container(
+      width: double.maxFinite,
+      color: Colors.blue,
+      height: 100,
+      alignment: Alignment.center,//child居中对齐
+      child: Text('abc',style: TextStyle(fontSize: 40,color:Colors.deepOrange,backgroundColor: Colors.green)),
+      );
+       
+       or
+   return Container(
+          // width: double.maxFinite,//最大尺寸
+        width: 200,
+        height: 100,
+
+        // alignment: Alignment.bottomRight,//居中对齐
+        child: Text("abc",
+            textAlign: TextAlign.center,//无法通过Text自己的居中来让Text居中到屏幕中间
+            style: TextStyle(fontSize: 40,color: Colors.yellow,backgroundColor: Colors.green)),
+      );
+```
+- row
+```dart
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'abc',
+          style: TextStyle(
+            fontSize: 40,
+            color: Colors.deepOrange,
+            backgroundColor: Colors.green,
+          ),
+        ),
+      ],
+    );
+```
+-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,//均匀分布子控件,两边顶头也有空间
+- mainAxisAlignment: MainAxisAlignment.spaceBetween,//均匀分布子控件,两边顶头没有空间
+- mainAxisAlignment: MainAxisAlignment.spaceAround,//中间分布平均的控件,两边顶头的用一半的中间的空间
+
+- //交叉轴默认对齐方式是center ,主轴是start
+- crossAxisAlignment: CrossAxisAlignment.stretch,//只有交叉轴有拉伸stretch是拉伸,下面container会被拉伸Text不会被拉伸
+- crossAxisAlignment: CrossAxisAlignment.start,//顶端对齐
+- crossAxisAlignment: CrossAxisAlignment.end,//交叉轴底部对齐
+
+> decoration 中声明 color
