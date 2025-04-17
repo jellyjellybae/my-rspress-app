@@ -297,3 +297,78 @@ then 方法接受两个参数，分别为成功回调 onFulfilled 和失败回�
 
 链式调用：通过 then 方法返回新的 Promise 实现链式调用，允许连续处理异步操作。
 
+## 实例方法
+**Array.prototype.map()**
+
+
+map() 方法创建一个新数组，这个新数组由原数组中的每个元素都调用一次提供的函数后的返回值组成。
+
+
+
+**由于 map 创建一个新数组，在没有使用返回的数组的情况下调用它是不恰当的；应该使用 forEach 或 for...of 作为代替。**
+```js
+const array1 = [1, 4, 9, 16];
+
+// 使用 map 方法
+const map1 = array1.map(x => x * 2);
+```
+## DeepCopy
+深拷贝（Deep Copy）是指创建一个对象的新副本，复制对象及其所有嵌套对象或数组的内容，新对象与原对象完全独立，互不影响。以下是几种实现深拷贝的常见方法，适用于 JavaScript：
+1 JSON.parse(JSON.stringify(obj))
+```js
+const obj = { a: 1, b: { c: 2 } };
+const deepCopy = JSON.parse(JSON.stringify(obj));
+
+// 修改副本不会影响原对象
+deepCopy.b.c = 3;
+console.log(obj); // { a: 1, b: { c: 2 } }
+console.log(deepCopy); // { a: 1, b: { c: 3 } }
+```
+2. 使用递归实现深拷贝 
+```js
+function deepCopy(obj, cache = new WeakMap()) {
+  // 处理 null 和非对象类型
+  if (obj === null || typeof obj !== 'object') return obj;
+
+  // 处理循环引用
+  if (cache.has(obj)) return cache.get(obj);
+
+  // 处理数组
+  if (Array.isArray(obj)) {
+    const copy = [];
+    cache.set(obj, copy);
+    obj.forEach((item, index) => {
+      copy[index] = deepCopy(item, cache);
+    });
+    return copy;
+  }
+
+  // 处理普通对象
+  const copy = {};
+  cache.set(obj, copy);
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      copy[key] = deepCopy(obj[key], cache);
+    }
+  }
+  return copy;
+}
+
+// 示例
+const obj = { a: 1, b: { c: 2 }, d: [1, 2] };
+obj.circular = obj; // 循环引用
+const copy = deepCopy(obj);
+copy.b.c = 3;
+console.log(obj); // 原对象不变
+console.log(copy); // 副本已修改
+```
+3. 使用 Lodash 库的 cloneDeep 方法
+```js
+import _ from 'lodash';
+
+4. 使用 structuredClone 方法
+```js
+const obj = { a: 1, b: { c: 2 } };
+const copy = structuredClone(obj);
+```
+
