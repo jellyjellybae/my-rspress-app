@@ -314,7 +314,7 @@ const map1 = array1.map(x => x * 2);
 ```
 ## DeepCopy
 深拷贝（Deep Copy）是指创建一个对象的新副本，复制对象及其所有嵌套对象或数组的内容，新对象与原对象完全独立，互不影响。以下是几种实现深拷贝的常见方法，适用于 JavaScript：
-1 JSON.parse(JSON.stringify(obj))
+1. JSON.parse(JSON.stringify(obj))
 ```js
 const obj = { a: 1, b: { c: 2 } };
 const deepCopy = JSON.parse(JSON.stringify(obj));
@@ -361,14 +361,62 @@ const copy = deepCopy(obj);
 copy.b.c = 3;
 console.log(obj); // 原对象不变
 console.log(copy); // 副本已修改
+///impove version
+ 
+[ WeakMap ](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+function deepClone(obj, hashMap = new WeakMap()) {
+  // 如果传入的类型不对，则不做处理
+  if (typeof obj !== "object" || obj === null) {
+    return;
+  }
+  // 查缓存字典中是否已有需要克隆的对象，有的话直接返回同一个对象（同一个引用，不用递归无限创建进而导致栈溢出了）
+  if (hashMap.has(obj)) {
+    return hashMap.get(obj);
+  }
+  let newObj = {}; // 新对象
+  const dataKeys = Object.keys(obj); // 获取原对象所有键值
+  dataKeys.forEach((value) => {
+    const currentValue = obj[value];
+    // 基础类型直接赋值
+    if (typeof currentValue !== "object" || currentValue === null) {
+      newObj[value] = currentValue;
+    } else if (Array.isArray(currentValue)) {
+      // 实现数组的深拷贝
+      newObj[value] = [...currentValue];
+    } else if (currentValue instanceof Set) {
+      // 实现set数据的深拷贝
+      newObj[value] = new Set([...currentValue]);
+    } else if (currentValue instanceof Map) {
+      // 实现map数据的深拷贝
+      newObj[value] = new Map([...currentValue]);
+    } else if (currentValue instanceof Date) {
+      // 日期类型深拷贝
+      newObj[value] = new Date(currentValue.valueOf())
+    } else {
+      hashMap.set(obj, newObj); // 哈希表缓存新值
+      // 普通对象则递归赋值
+      newObj[value] = deepClone(currentValue,hashMap);
+    }
+
+  });
+  return newObj;
+}
+
 ```
 3. 使用 Lodash 库的 cloneDeep 方法
 ```js
 import _ from 'lodash';
 
+```
 4. 使用 structuredClone 方法
 ```js
 const obj = { a: 1, b: { c: 2 } };
 const copy = structuredClone(obj);
+```
+
+5.object.assign
+```js
+const obj = { a: 1, b: { c: 2 } };
+const copy = Object.assign({}, obj);
 ```
 
