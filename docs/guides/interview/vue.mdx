@@ -1,0 +1,27 @@
+import Title from '@/components/my';
+
+<Title text="Vue" />
+
+
+## Vue2 的 $set
+在 Vue 2 中，响应式系统有一定的限制，当你向一个已有响应式对象中 添加新的属性 时，Vue 无法检测到这个新属性的变化。
+
+为了解决这个问题，Vue 提供了一个辅助方法：
+
+```js
+Vue.set(target, propertyName/index, value)
+```
+
+组件中使用：
+
+```js
+this.$set(this.someObject, 'newProperty', 'newValue')
+```
+
+使用场景说明：
+
+```js
+this.someObject = {
+  ...this.someObject,
+  newProperty: 'newValue'
+}

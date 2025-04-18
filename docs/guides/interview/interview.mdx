@@ -3,7 +3,7 @@ import Title from '@/components/my';
 
 <Title text="一些常见的面试题"/>
 :::note
-这是一个 `note` 类型的 `block`
+同源策略限制了跨域请求，但可以通过CORS（跨域资源共享）来解决。
 :::
 ## 防抖截流
 ### 防抖
@@ -361,9 +361,11 @@ const copy = deepCopy(obj);
 copy.b.c = 3;
 console.log(obj); // 原对象不变
 console.log(copy); // 副本已修改
-///impove version
- 
-[ WeakMap ](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+```
+**impove version**
+
+使用[ WeakMap ](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+```js
 function deepClone(obj, hashMap = new WeakMap()) {
   // 如果传入的类型不对，则不做处理
   if (typeof obj !== "object" || obj === null) {
@@ -420,3 +422,64 @@ const obj = { a: 1, b: { c: 2 } };
 const copy = Object.assign({}, obj);
 ```
 
+## currying
+柯里化（Currying）是一种将函数转换为嵌套函数的技术，每个嵌套函数只接受一个参数，并返回下一个函数，直到所有参数都被提供。柯里化可以简化函数的使用，提高代码的可读性和可维护性。
+
+柯里化函数通常具有以下特点：
+
+1. 每个嵌套函数只接受一个参数。
+2. 所有嵌套函数都返回下一个函数。
+3. 最终函数执行时，所有参数都被提供。
+
+柯里化函数可以简化函数的使用，提高代码的可读性和可维护性。
+
+add(1)(2)(3).valueOf()
+add(1,2,3)
+add(1,2)(3)(4,5)
+```js
+const add = (...args) => {
+    //定义了一个函数 add，它接受任意数量的参数（通过 ...args 收集）。
+    //params 是一个数组，用于存储所有累积的参数。
+    let params = args
+    const addFn = (...args2) => {
+        params = params.concat(args2)
+        return addFn
+    }
+    //addFn 是一个内部函数，也接受任意数量的参数（...args2）。
+    // 每次调用 addFn 时，新传入的参数会通过 concat 方法追加到 params 数组中。
+    // addFn 返回自身（return addFn），从而实现链式调用。
+    addFn.valueOf = () => {
+        return params.reduce((a, b) => a + b, 0)
+    }
+    // 为 addFn 定义了一个 valueOf 方法。
+    // valueOf 是 JavaScript 中的一个特殊方法，当对象需要转换为原始值时（如与数字运算或隐式类型转换时）会被调用。
+    // 这里通过 reduce 方法将 params 数组中的所有元素求和并返回。
+    return addFn
+    // 最终，add 函数返回 addFn，从而允许链式调用。
+}
+
+
+// 通用的柯里化函数
+function curry(fn) {
+    return function curried(...args) {
+        // 如果当前参数数量 >= 原函数参数数量，直接执行
+        if (args.length >= fn.length) {
+            return fn.apply(this, args);
+        } else {
+            // 否则返回一个新函数，继续收集参数
+            return function (...moreArgs) {
+                return curried.apply(this, args.concat(moreArgs));
+            };
+        }
+    };
+}
+```
+## reverse
+```js
+const fn = function(str) {
+  return str.split('').reverse().join('');
+}
+console.log(fn(null));
+```
+
+## 数组去重

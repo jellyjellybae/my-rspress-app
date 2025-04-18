@@ -1,0 +1,6 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([["6240"],{7322:function(e,t,s){s.r(t),s.d(t,{default:()=>n});var i=s(6773);s(1699);let a=e=>{let{item:t}=e;return(0,i.jsx)("div",{className:"mb-4 break-inside-avoid group",children:(0,i.jsxs)("div",{className:`
+        bg-white rounded-xl shadow-lg p-6
+        transition-all duration-300
+        hover:shadow-xl hover:-translate-y-1
+        ${"short"===t.height?"h-48":"medium"===t.height?"h-64":"h-80"}
+      `,children:[(0,i.jsx)("h3",{className:"text-lg font-semibold text-gray-800 mb-2",children:t.title}),(0,i.jsx)("p",{className:"text-gray-600 leading-relaxed",children:t.content})]})})},l=e=>{let{items:t}=e;return(0,i.jsx)("div",{className:"container mx-auto px-4 py-8",children:(0,i.jsx)("div",{className:"columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6",children:t.map(e=>(0,i.jsx)(a,{item:e},e.id))})})},n=()=>(0,i.jsx)("div",{className:"min-h-screen bg-gray-50",children:(0,i.jsx)(l,{items:[{id:1,title:"卡片标题 1",content:"为什么不说呢？“我说不出口”...这是示例卡片内容，用于演示不同长度的文本展示效果。",height:"short"},{id:2,title:"较长标题的卡片",content:"这个卡片包含更多内容。Tailwind CSS 让我们可以快速构建现代网页设计，无需编写自定义 CSS。配合 React 组件化开发，能够高效实现复杂的布局需求。瀑布流布局的关键在于 columns 属性和 break-inside-avoid 的组合使用。",height:"tall"}]})})}}]);
