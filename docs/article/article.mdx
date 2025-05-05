@@ -171,3 +171,26 @@ function createElement (type, props, ...children) {
 const App = createElement('div', { id: 'app' }, '🦋app')
 ...
 ```
+## 任务调度器
+```js
+let taskId = 1
+function workLoop(deadline) {
+  taskId++
+
+  let shouldYield = false
+  while(!shouldYield) {
+    console.log('taskId', taskId)
+    shouldYield = deadline.timeRemaining() < 1
+  }
+  console.log('workLoop', deadline)
+  requestIdleCallback(workLoop)
+}
+requestIdleCallback(workLoop)
+```
+- 使用 requestIdleCallback API 来确保任务在浏览器空闲时执行，不会阻塞主线程
+- 通过 deadline.timeRemaining() 来检查剩余时间，确保不会占用太多时间
+- 实现了持续运行的工作循环，每次循环都会增加任务ID
+- 当剩余时间不足1毫秒时，会暂停当前循环，等待下一次空闲时间
+```
+
+## fiber

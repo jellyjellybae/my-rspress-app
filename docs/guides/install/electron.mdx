@@ -1,0 +1,201 @@
+# electron 
+# prequites
+- nodemon
+nodemon 是一个监控文件变化的工具，当文件变化时，自动重启应用
+```nodemon.json
+{
+  "watch": ["src"],
+  "ext": "js,jsx,json",
+  "ignore": ["node_modules/**", "dist/**"]
+}
+```
+# 安装
+
+```bash
+yarn add electron
+```
+
+# 运行
+
+```bash
+yarn dev
+```
+# main 
+# renderer
+# preload
+# debug
+```launch.json
+  {
+      "version": "0.2.0",
+      "configurations": [
+          {
+              "type": "node",
+              "request": "launch",
+              "name": "Electron: Main",
+              "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+              "runtimeArgs": [
+                  "--remote-debugging-port=9223",
+                  "."
+              ],
+              "windows": {
+                  "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+              }
+          },
+          {
+              "name": "Electron: Renderer",
+              "type": "chrome",
+              "request": "attach",
+              "port": 9223,
+              "webRoot": "${workspaceFolder}",
+              "timeout": 30000
+          }
+      ],
+      "compounds": [
+          {
+              "name": "Electron: All",
+              "configurations": [
+                  "Electron: Main",
+                  "Electron: Renderer"
+              ]
+          }
+      ]
+  }  
+```
+# 通信
+##  preload 和 renderer 通信
+```main.js
+const { ipcMain } = require('electron')
+
+ipcMain.on('message', (event, arg) => {
+  console.log(arg)
+})
+```
+```preload.js
+const { ipcRenderer } = require('electron')
+
+ipcRenderer.on('message', (event, arg) => {
+  console.log(arg)
+})
+```
+##  main 和 renderer 通信
+通过preload.js 暴露给renderer 通信
+```main.js
+ipcMain.on('message', (event, arg) => {
+  console.log('sdojfisja_________________',arg); // main prints "ping"
+})
+```
+```preload.js
+
+const { contextBridge, ipcRenderer } = require('electron')
+
+contextBridge.exposeInMainWorld("a", {
+    baby:"justin biber",
+    babyfun:()=>{
+        ipcRenderer.send('message', 'ping');
+    }
+})
+```
+```renderer.js
+window.addEventListener('DOMContentLoaded', () => {
+    const babybtn = document.querySelector('#btn');
+    babybtn.addEventListener('click', () => {
+        window.a.babyfun();
+    })
+
+})
+```
+## menu 菜单 主进程向渲染进程发送消息
+
+```main.js
+const { Menu, BrowserWindow } = require('electron')
+
+const createMenu = (win) => {
+    const menu = [
+        {
+            label: 'File',
+            submenu: [
+                {
+                    label: 'New',
+                    accelerator: 'CmdOrCtrl+N',
+                    click: () => {
+                        console.log('New File', win.webContents)
+                    }
+                },
+            ]
+        }
+    ]
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
+}
+const createWindow = () => {
+    const mainWindow = new BrowserWindow({})
+    ...
+
+    createMenu(mainWindow)
+}
+```
+> 可以把menu module 抽离出来，方便管理
+## 主进程向preload 发送消息
+```main.js
+    '''
+    submenu: [
+                    {
+                        label: 'New',
+                        accelerator: 'CmdOrCtrl+N',
+                        click: () => {
+                            win.webContents.send('test')
+                        }
+                    },
+                ]
+    '''
+```
+```preload.js
+ipcRenderer.on('test', () => {
+    console.log('test')
+})
+```
+## invoke 通信
+```main.js
+const { dialog } = require('electron')
+'''      
+ipcMain.on('saveFile', (event, arg) => {
+  BrowserWindow.fromWebContents(event.sender).send('saveFile', arg);
+  console.log('saveFile', arg);
+}
+);
+ipcMain.handle('selectFolder', async (event) => {
+  const {filePaths} = await dialog.showOpenDialog({})
+  console.log(filePaths); 
+  return filePaths;
+})
+
+```
+```preload.js
+const { contextBridge, ipcRenderer} = require("electron");
+
+contextBridge.exposeInMainWorld("a", {
+    baby: "justin biber",
+    babyfun: () => {
+        ipcRenderer.send('message', 'ping');
+    },
+    upload: async (filePath) => {
+        const file = await ipcRenderer.invoke('selectFolder', filePath);
+        console.log(file);
+        document.querySelector('input').value = file;
+    }
+})
+```
+## electron-vite
+安装 tailwindcss import
+```bash
+yarn add tailwindcss @tailwindcss/postcss postcss autoprefixer
+```
+(notworing)[https://github.com/tailwindlabs/tailwindcss/discussions/16250]
+```tsconfig.json
+{
+    "compilerOptions": {
+    "moduleResolution": "bundler"
+    }
+}
+```
+
+
