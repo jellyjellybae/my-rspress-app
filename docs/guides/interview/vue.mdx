@@ -25,3 +25,26 @@ this.someObject = {
   ...this.someObject,
   newProperty: 'newValue'
 }
+## Vue2 Vue3区别
+Suspense Fragment 组件
+Vue的Suspense组件是Vue 3引入的一个特性，主要用于处理异步组件的加载状态。它的主要功能和用途包括：
+
+1. 处理异步组件 - Suspense可以等待异步组件或异步setup()函数完成加载后再显示内容。
+2. 提供加载状态 - 它有两个插槽：默认插槽用于展示异步完成后的内容，fallback插槽用于展示加载中的状态。
+3. 简化错误处理 - 结合errorCaptured和onErrorCaptured可以更好地处理异步加载过程中的错误。
+```vue
+<template>
+  <Suspense>
+    <!-- 默认插槽：异步组件 -->
+    <template #default>
+      <AsyncComponent />
+    </template>
+    
+    <!-- fallback插槽：加载状态 -->
+    <template #fallback>
+      <div>正在加载中...</div>
+    </template>
+  </Suspense>
+</template>
+```
+

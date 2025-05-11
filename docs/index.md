@@ -28,4 +28,8 @@ features:
     # details: 对全文搜索、国际化等常见功能可以做到开箱即用。
     icon: 😑
     link: /mood
+  - title: 'pitfalls'
+    details: 一些实践陷阱。
+    icon: 😑
+    link: /pitfalls
 ---

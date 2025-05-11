@@ -1,0 +1,37 @@
+# CSS交互踩过坑
+global.scss
+```scss
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  -webkit-app-region: drag;
+  //css 控制拖动
+}
+textarea,
+{
+  -webkit-app-region: no-drag;
+}
+
+```
+当你设置 html `{ -webkit-app-region: drag; } `时，你实际上让整个应用窗口变成了可拖动区域。这会导致点击事件被用于窗口拖动，而不是触发UI元素的交互功能。
+虽然你对 textarea 设置了 -webkit-app-region: no-drag;，但是没有对其他交互元素（如select下拉框、按钮等）设置这个属性，所以它们都不能正常点击。
+```css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-app-region: drag;
+}
+
+/* 所有交互元素都应该是不可拖动的 */
+input, button, select, option, a, textarea, [role="button"], .el-select, 
+.el-input, .el-button, .el-radio, .el-checkbox, .el-switch {
+  -webkit-app-region: no-drag;
+}
+```
