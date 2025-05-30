@@ -1,0 +1,21 @@
+
+# MAC 快捷键过渡到 Windows 快捷键
+## Powerkeys
+## AutoHotKey
+AutoHotkey安装
+
+- 官网下载：autohotkey.com
+- 选择版本：推荐下载 AutoHotkey v2（最新版）
+- 安装：直接运行 .exe 安装包
+
+- 实现Ctrl+左键=右键的脚本
+  - 创建脚本文件（保存为 .ahk 后缀）：
+```mac-ctrl-click.ahk
+#SingleInstance Force
+
+; Ctrl + 左键点击 = 右键点击
+LCtrl & LButton::
+{
+    Click("Right")
+}
+```
