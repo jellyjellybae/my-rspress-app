@@ -23,7 +23,11 @@
     "name": "tricks",
     "label": "Tricks"
   },
-  {
+   {
+    "type": "file",
+    "name": "testing",
+    "label": "前端测试"
+  },{
     "type": "dir",
     "name": "shortcuts",
     "label": "快捷键"
