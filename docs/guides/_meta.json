@@ -23,14 +23,14 @@
     "name": "tricks",
     "label": "Tricks"
   },
-   {
-    "type": "file",
+  {
+    "type": "dir",
     "name": "testing",
     "label": "前端测试"
-  },{
+  },
+  {
     "type": "dir",
     "name": "shortcuts",
     "label": "快捷键"
   }
-
 ]

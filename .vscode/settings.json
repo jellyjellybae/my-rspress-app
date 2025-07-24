@@ -1,3 +1,5 @@
 {
-    "workbench.colorTheme": "Xcode 11 Default Light"
+    "workbench.colorTheme": "Xcode 11 Default Light",
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
 }
